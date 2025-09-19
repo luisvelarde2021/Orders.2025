@@ -1,5 +1,6 @@
 using MudBlazor.Services;
 using Orders.Frontend.Components;
+using Orders.Frontend.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,8 @@ builder.Services.AddMudServices();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("htpps://localhost:7043") });
+builder.Services.AddScoped<IRepository, Repository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,7 +23,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 
 app.UseAntiforgery();
 
